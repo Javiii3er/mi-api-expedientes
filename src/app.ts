@@ -1,0 +1,28 @@
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import routes from './routes';
+import { errorHandler } from './middlewares/error.middleware';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger'; // Esta importación debe funcionar ahora
+
+const app = express();
+
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(rateLimit({ windowMs: 60_000, max: 100 }));
+
+// Configuración DIRECTA de Swagger (sin try-catch complejo)
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Health Check
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK', message: 'Servidor de Expedientes funcionando' });
+});
+
+app.use('/', routes);
+app.use(errorHandler);
+
+export default app;
