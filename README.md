@@ -158,7 +158,7 @@ Revisar configuración de BD en .env
 _____________________________________________________________
 ## Autor
 
-Javier Rivera
-Contacto: joselurip1031@gmail.com
+Javier Rivera  
+Contacto: joselurip1031@gmail.com  
 GitHub: Javiii3er
 
