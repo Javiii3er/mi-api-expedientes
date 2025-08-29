@@ -5,7 +5,8 @@ import rateLimit from 'express-rate-limit';
 import routes from './routes';
 import { errorHandler } from './middlewares/error.middleware';
 import swaggerUi from 'swagger-ui-express';
-import { swaggerSpec } from './swagger'; // Esta importación debe funcionar ahora
+import { swaggerSpec } from './swagger';
+
 
 const app = express();
 
@@ -24,5 +25,11 @@ app.get('/health', (req, res) => {
 
 app.use('/', routes);
 app.use(errorHandler);
+
+app.use(cors({
+  origin: 'http://localhost:3001', 
+  credentials: true
+}));
+
 
 export default app;
