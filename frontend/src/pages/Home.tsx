@@ -1,5 +1,5 @@
 import { useAuth } from '../auth/useAuth'
-import './Home.css' // Archivo para estilos personalizados
+import './Home.css'
 
 export default function Home() {
   const { isAuthenticated, user } = useAuth()
