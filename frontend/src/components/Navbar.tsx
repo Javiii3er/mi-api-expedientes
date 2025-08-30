@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/useAuth'
+import './Navbar.css'
 
 export const AppNavbar = () => {
   const { isAuthenticated, user, logout } = useAuth()
@@ -12,28 +13,53 @@ export const AppNavbar = () => {
   }
 
   return (
-    <Navbar expand="md" bg="dark" data-bs-theme="dark">
+    <Navbar expand="md" className="custom-navbar" variant="dark">
       <Container>
-        <Navbar.Brand as={Link} to="/">Expedientes</Navbar.Brand>
+
+        {/* Branding principal */}
+        <Navbar.Brand as={Link} to="/" className="navbar-brand-custom">
+          🗂️ Sistema de Expedientes
+        </Navbar.Brand>
+        
         <Navbar.Toggle aria-controls="main-nav" />
+        
         <Navbar.Collapse id="main-nav">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/">Inicio</Nav.Link>
+            {/* Links visibles solo si está autenticado */}
             {isAuthenticated && (
               <>
-                <Nav.Link as={NavLink} to="/expedientes">Expedientes</Nav.Link>
+                <Nav.Link as={NavLink} to="/expedientes" className="nav-link-custom">
+                  📁 Expedientes
+                </Nav.Link>
+                
                 {user?.rol === 'coordinador' && (
-                  <Nav.Link as={NavLink} to="/revisar">Revisar/Autorizar</Nav.Link>
+                  <Nav.Link as={NavLink} to="/revisar" className="nav-link-custom">
+                    ✅ Revisar/Autorizar
+                  </Nav.Link>
                 )}
               </>
             )}
           </Nav>
+          
           <Nav>
-            {!isAuthenticated ? (
-              <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-            ) : (
-              <NavDropdown title={user?.nombre || user?.rol} align="end">
-                <NavDropdown.Item onClick={doLogout}>Salir</NavDropdown.Item>
+            {isAuthenticated && (
+              <NavDropdown 
+                title={
+                  <span className="user-dropdown">
+                    👤 {user?.nombre || user?.rol}
+                  </span>
+                } 
+                align="end"
+                className="nav-dropdown-custom"
+              >
+                <NavDropdown.ItemText className="user-info">
+                  <small>Rol: <strong>{user?.rol}</strong></small>
+                </NavDropdown.ItemText>
+                <NavDropdown.Divider />
+
+                <NavDropdown.Item onClick={doLogout} className="logout-item">
+                  🚪 Cerrar Sesión
+                </NavDropdown.Item>
               </NavDropdown>
             )}
           </Nav>

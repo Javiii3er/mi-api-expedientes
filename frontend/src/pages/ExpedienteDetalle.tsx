@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { getExpediente, cambiarEstadoExpediente } from '../services/expedientes.api'
 import { listIndicios, toggleIndicio } from '../services/indicios.api'
@@ -19,17 +19,21 @@ export default function ExpedienteDetalle({ startTab = 'datos', createIndicio }:
   const [justificacion, setJustificacion] = useState('')
   const [estadoNuevo, setEstadoNuevo] = useState<'aprobado' | 'rechazado'>('aprobado')
 
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     const [e, i] = await Promise.all([
       getExpediente(expedienteId),
       listIndicios(expedienteId),
     ])
     setExp(e)
     setIndicios(i)
-  }
+  }, [expedienteId]) 
 
-  useEffect(() => { fetchAll() }, [expedienteId])
-  useEffect(() => { if (createIndicio) setTab('indicios') }, [createIndicio])
+  useEffect(() => { 
+    fetchAll() 
+  }, [fetchAll])
+  useEffect(() => { 
+    if (createIndicio) setTab('indicios') 
+  }, [createIndicio])
 
   if (!exp) return <div>Cargando…</div>
 

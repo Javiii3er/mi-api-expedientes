@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
+    "@types/react-bootstrap": "^1.0.1",
+    "axios": "^1.11.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.8",
     "cors": "^2.8.5",
@@ -23,6 +25,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "mssql": "^10.0.4",
+    "react-bootstrap": "^2.10.10",
     "react-hook-form": "^7.62.0",
     "react-router-dom": "^7.8.2",
     "swagger-jsdoc": "^6.2.8",

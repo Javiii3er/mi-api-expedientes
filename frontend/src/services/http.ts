@@ -16,21 +16,28 @@ export class HttpClient {
   }
 
   private async handleResponse<T>(res: Response): Promise<T> {
-    if (res.status === 401 || res.status === 403) {
-      // Token inválido o expirado → limpiar sesión y redirigir
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      window.location.href = "/login";
-      throw new Error("Sesión expirada. Inicie sesión de nuevo.");
-    }
-
-    if (!res.ok) {
-      const error = await res.json().catch(() => ({}));
-      throw new Error(error.message || `Error HTTP: ${res.status}`);
-    }
-
-    return res.json();
+  const responseClone = res.clone();
+  
+  if (responseClone.status === 401 || responseClone.status === 403) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+    throw new Error("Sesión expirada. Inicie sesión de nuevo.");
   }
+
+  if (!responseClone.ok) {
+    try {
+      const errorData = await responseClone.json();
+      throw new Error(errorData.message || `Error HTTP: ${responseClone.status}`);
+    } catch {
+      const errorText = await responseClone.text();
+      throw new Error(errorText || `Error HTTP: ${responseClone.status}`);
+    }
+  }
+
+  return res.json();
+}
+
 
   async get<T>(url: string, params?: Record<string, any>): Promise<T> {
     const query = params
@@ -79,4 +86,4 @@ export class HttpClient {
   }
 }
 
-export const http = new HttpClient(import.meta.env.VITE_API_BASE_URL);
+export const http = new HttpClient('http://localhost:3000');

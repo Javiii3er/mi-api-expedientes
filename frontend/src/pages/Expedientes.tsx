@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState,useCallback } from 'react'
 import { listExpedientes, toggleExpediente } from '../services/expedientes.api'
 import type { Expediente, EstadoExpediente } from '../types/expediente'
 import { SearchBar } from '../components/SearchBar'
@@ -21,18 +21,21 @@ export default function Expedientes() {
 
   const pageSize = 10
 
-  const fetchData = async () => {
-    setLoading(true)
-    try {
-      const res = await listExpedientes({ pagina: page, q, estado, pageSize })
-      setData(res.data)
-      setTotal(res.total)
-    } finally {
-      setLoading(false)
-    }
+  const fetchData = useCallback(async () => {
+  setLoading(true)
+  try {
+    const res = await listExpedientes({ page, q, estado, pageSize })
+    setData(res.data)
+    setTotal(res.total)
+  } finally {
+    setLoading(false)
   }
+}, [page, q, estado, pageSize])
 
-  useEffect(() => { fetchData() }, [page, q, estado])
+useEffect(() => {
+  fetchData()
+}, [fetchData])
+
 
   const columns = useMemo(() => ([
     { key: 'codigo', header: 'Código' },

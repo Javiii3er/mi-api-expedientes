@@ -1,16 +1,6 @@
-// src/services/expedientes.api.ts
 import { http } from "./http";
+import type { Expediente } from "../types/expediente";
 
-export interface Expediente {
-  id: number;
-  codigo: string;
-  descripcion: string;
-  estado: "pendiente" | "aprobado" | "rechazado";
-  activo: boolean;
-  tecnicoId: number;
-  createdAt?: string;
-  updatedAt?: string;
-}
 
 export interface ExpedientesResponse {
   data: Expediente[];
@@ -26,7 +16,7 @@ export interface PaginationParams {
   estado?: string;
   codigo?: string;
   tecnicoId?: number;
-
+  q?: string;
 }
 
 export const expedientesService = {
@@ -48,22 +38,16 @@ export const expedientesService = {
   async actualizarExpediente(id: number, data: {
     codigo: string;
     descripcion: string;
-
   }): Promise<Expediente> {
     return http.put<Expediente>(`/expedientes/${id}`, data);
   },
 
   async cambiarEstado(
     id: number, 
-    estado: "aprobado" | "rechazado", 
-    justificacion?: string
+    data: { estado: "aprobado" | "rechazado"; justificacion: string }  
   ): Promise<Expediente> {
-    return http.patch<Expediente>(`/expedientes/${id}/estado`, {
-      estado,
-      justificacion
-    });
+    return http.patch<Expediente>(`/expedientes/${id}/estado`, data);
   },
-
 
   async activarDesactivarExpediente(
     id: number, 
@@ -84,7 +68,11 @@ export const expedientesService = {
   }
 };
 
-
 export const createExpediente = expedientesService.crearExpediente;
 export const getExpediente = expedientesService.obtenerExpediente;
 export const updateExpediente = expedientesService.actualizarExpediente;
+export const listExpedientes = expedientesService.listarExpedientes;
+export const cambiarEstadoExpediente = expedientesService.cambiarEstado;
+export const toggleExpediente = expedientesService.activarDesactivarExpediente;
+export const buscarExpedientePorCodigo = expedientesService.buscarPorCodigo;
+export const getExpedientesPorTecnico = expedientesService.obtenerPorTecnico;

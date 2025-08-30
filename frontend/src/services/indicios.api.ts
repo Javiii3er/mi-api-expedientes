@@ -95,3 +95,14 @@ export const indiciosService = {
     return http.delete<void>(`/indicios/${id}`);
   }
 };
+
+// ✅ Exportaciones individuales (conservadoras)
+export const listIndicios = indiciosService.listarIndicios;
+export const getIndicio = indiciosService.obtenerIndicio;
+export const createIndicio = indiciosService.crearIndicio;
+export const updateIndicio = indiciosService.actualizarIndicio;
+export const patchIndicio = indiciosService.actualizarParcialIndicio;
+export const toggleIndicio = indiciosService.activarDesactivarIndicio;
+export const buscarIndicioPorCodigo = indiciosService.buscarPorCodigo;
+export const listIndiciosActivos = indiciosService.listarIndiciosActivos;
+export const deleteIndicio = indiciosService.eliminarIndicio;

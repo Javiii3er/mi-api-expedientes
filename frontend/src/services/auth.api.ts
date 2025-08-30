@@ -1,4 +1,3 @@
-// src/services/auth.api.ts
 import { http } from "./http";
 
 export interface User {
@@ -15,13 +14,31 @@ export interface LoginResponse {
 
 export const authService = {
   async login(username: string, password: string): Promise<LoginResponse> {
-    const response = await http.post<LoginResponse>("/auth/login", {
-      username,
-      password,
-    });
-    
-    authService.setSession(response);
-    return response;
+    try {
+      const response = await http.post<LoginResponse>("/auth/login", {
+        username,
+        password,
+      });
+
+      // Guardar sesión
+      authService.setSession(response);
+      return response;
+
+    } catch (error: any) {
+      // Manejo de errores detallado
+      const msg = (error instanceof Error) ? error.message : "Error desconocido";
+
+      // Errores comunes según status code
+      if (msg.includes("401")) {
+        throw new Error("Credenciales incorrectas");
+      } else if (msg.includes("500")) {
+        throw new Error("Error del servidor. Intenta más tarde");
+      } else if (msg.includes("Failed to fetch")) {
+        throw new Error("No se puede conectar al servidor");
+      } else {
+        throw new Error(msg);
+      }
+    }
   },
 
   logout(): void {
@@ -53,11 +70,10 @@ export const authService = {
     return user?.rol === role;
   },
 
-  // Método adicional útil: Verificar si el token está expirado
   isTokenExpired(): boolean {
     const token = authService.getToken();
     if (!token) return true;
-    
+
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.exp * 1000 < Date.now();
@@ -66,7 +82,6 @@ export const authService = {
     }
   },
 
-  // Método adicional: Forzar cierre de sesión si el token expiró
   validateSession(): boolean {
     if (authService.isTokenExpired()) {
       authService.logout();
@@ -75,3 +90,7 @@ export const authService = {
     return true;
   }
 };
+
+// Funciones reexportadas
+export const getCurrentUser = authService.getUser;
+export const isAuthenticated = authService.isAuthenticated;

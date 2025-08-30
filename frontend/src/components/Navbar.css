@@ -1,0 +1,102 @@
+/* Navbar personalizado */
+.custom-navbar {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
+}
+
+.navbar-brand-custom {
+  font-weight: 700;
+  font-size: 1.4rem !important;
+  color: #ecf0f1 !important;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand-custom:hover {
+  color: #3498db !important;
+  transform: translateY(-1px);
+}
+
+.nav-link-custom {
+  color: #bdc3c7 !important;
+  font-weight: 500;
+  margin: 0 10px;
+  padding: 8px 16px !important;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-link-custom:hover,
+.nav-link-custom.active {
+  color: #ecf0f1 !important;
+  background: rgba(52, 152, 219, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+.login-link {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white !important;
+  border-radius: 25px;
+  padding: 8px 20px !important;
+}
+
+.login-link:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #1f639a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.user-dropdown {
+  color: #ecf0f1 !important;
+  font-weight: 500;
+}
+
+.nav-dropdown-custom .dropdown-menu {
+  background: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
+}
+
+.nav-dropdown-custom .dropdown-item {
+  padding: 12px 20px;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  margin: 4px;
+}
+
+.nav-dropdown-custom .dropdown-item:hover {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  transform: translateX(5px);
+}
+
+.user-info {
+  padding: 12px 20px;
+  color: #7f8c8d !important;
+  font-size: 0.9rem;
+}
+
+.logout-item {
+  color: #e74c3c !important;
+  font-weight: 500;
+}
+
+.logout-item:hover {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+  color: white !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-link-custom {
+    margin: 5px 0;
+    text-align: center;
+  }
+  
+  .navbar-brand-custom {
+    font-size: 1.2rem !important;
+  }
+}

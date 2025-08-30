@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createExpediente, getExpediente, updateExpediente, Expediente } from '../services/expedientes.api'
+import { createExpediente, getExpediente, updateExpediente } from '../services/expedientes.api'
+import type { Expediente } from '../types/expediente';
 import { useNavigate, useParams } from 'react-router-dom'
 
 const schema = z.object({

@@ -6,7 +6,7 @@ export default function RevisarExpedientes() {
   const [pendientes, setPendientes] = useState<Expediente[]>([])
 
   const fetchData = async () => {
-    const res = await listExpedientes({ pagina: 1, estado: 'pendiente', pageSize: 50 })
+    const res = await listExpedientes({ page: 1, estado: 'pendiente', pageSize: 50 })
     setPendientes(res.data)
   }
 

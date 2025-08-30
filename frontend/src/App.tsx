@@ -1,12 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import { AuthProvider } from "./auth/AuthProvider";
+import { Container } from 'react-bootstrap'
+import { AppRoutes } from './routes/AppRoutes'
+import { AppNavbar } from './components/Navbar'
+import { AuthProvider } from './auth/AuthProvider'
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <App />
+export function App() {
+  return (
+    <AuthProvider> 
+      <>
+        <AppNavbar />
+        <Container className="py-3">
+          <AppRoutes />
+        </Container>
+      </>
     </AuthProvider>
-  </React.StrictMode>
-);
+  )
+}
+
+export default App;
